@@ -4,8 +4,6 @@ import api from "../services/api";
 
 export const createClient = async (clientData: ClientDTO) => {
 
-    console.log(">>>>", clientData);
-
     try {
         const response = await api.post("/client", clientData);
         return response.data;

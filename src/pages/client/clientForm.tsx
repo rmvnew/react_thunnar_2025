@@ -6,10 +6,12 @@ import { ClientFormInputs } from "@interfaces/client.interfaces";
 import { useState } from "react";
 import CpfInput from "@components/CpfInput";
 import CnpjInput from "@components/CnpjInput";
+import { useNavigate } from "react-router-dom";
 
 const ClientForm = () => {
     const { register, handleSubmit, reset, control } = useForm<ClientFormInputs>();
     const [isCompany, setIsCompany] = useState(false);
+    const navigate = useNavigate();
 
     const onSubmit = async (data: ClientFormInputs) => {
         try {
@@ -29,9 +31,12 @@ const ClientForm = () => {
                 },
             };
 
-            console.log('>>>>', clientData);
 
-            await createClient(clientData);
+
+            await createClient(clientData).then(() => {
+                navigate("/users");
+            });
+
             alert("Cliente cadastrado com sucesso!");
             reset();
         } catch (error) {

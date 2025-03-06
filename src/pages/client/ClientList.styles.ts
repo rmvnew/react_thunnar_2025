@@ -1,81 +1,10 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { Container as MuiContainer, Button as MuiButton, TextField, IconButton, Switch } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import api from "@services/api";
-import { useState, useEffect } from "react";
-
-export const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5f5f5;
-  }
-`;
-
-export const Container = styled(MuiContainer)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f5f5f5;
-  color: #333;
-`;
-
-export const FormWrapper = styled.div`
-  width: 90%;
-  max-width: 1200px;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-`;
-
-export const StyledGrid = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 10px;
-`;
-
-export const StyledButton = styled(MuiButton)`
-  background-color: #007bff !important;
-  color: white !important;
-  font-weight: bold;
-  &:hover {
-    background-color: #0056b3 !important;
-  }
-`;
-
-export const StyledSelect = styled.select`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: white;
-  outline: none;
-  appearance: none;
-  cursor: pointer;
-  color: #333;
-`;
+import styled from "styled-components";
+import { Button as MuiButton, TextField, IconButton, Switch } from "@mui/material";
 
 export const SearchContainer = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 1rem;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
@@ -83,57 +12,40 @@ export const SearchContainer = styled.div`
 
 export const SearchInput = styled(TextField)`
   flex: 1;
-  margin-right: 1rem;
+  max-width: 500px;
+  
 `;
 
 export const AddUserButton = styled(MuiButton)`
   background-color: #28a745 !important;
   color: white !important;
   font-weight: bold;
+  height: 50px;
+ 
   &:hover {
     background-color: #218838 !important;
   }
 `;
 
+export const BackButton = styled(MuiButton)`
+  background-color: #007bff !important;
+  margin-buttom: 15px; 
+  height: 50px;
+  color: white !important;
+  font-weight: bold;
+  
+  &:hover {
+    background-color: #0056b3 !important;
+  }
+`;
+
 export const TableContainerStyled = styled.div`
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   overflow-x: auto;
   display: flex;
   justify-content: center;
-`;
-
-export const TableStyled = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  min-height: 400px;
-  display: table;
-  text-align: center;
-
-  @media (max-width: 1024px) {
-    width: 95%;
-  }
-
-  @media (max-width: 768px) {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  @media (max-width: 480px) {
-    width: 100%;
-    font-size: 12px;
-  }
-`;
-
-export const EmptyRow = styled.tr`
-  height: 100px;
-  text-align: center;
-  color: #999;
-  font-size: 16px;
 `;
 
 export const ActionsContainer = styled.div`
@@ -150,4 +62,11 @@ export const EditButton = styled(IconButton)`
 
 export const DeleteButton = styled(IconButton)`
   color: #dc3545 !important;
+`;
+
+export const EmptyRow = styled.tr`
+  height: 100px;
+  text-align: center;
+  color: #999;
+  font-size: 16px;
 `;

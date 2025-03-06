@@ -35,7 +35,10 @@
       ],
       "@components/*": [
         "./src/components/*"
-      ]
+      ],
+      "@contexts/*": [
+        "./src/contexts/*"
+      ],
     }
   },
   "include": [
