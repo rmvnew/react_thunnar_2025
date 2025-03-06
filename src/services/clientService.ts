@@ -3,6 +3,9 @@ import { ClientDTO } from "../interfaces/client.interfaces";
 import api from "../services/api";
 
 export const createClient = async (clientData: ClientDTO) => {
+
+    console.log(">>>>", clientData);
+
     try {
         const response = await api.post("/client", clientData);
         return response.data;
@@ -30,10 +33,10 @@ export const editClient = (clientId: number) => {
 
 export const deleteClient = async (clientId: number) => {
     try {
-        await api.delete(`/clients/${clientId}`);
-        alert("Cliente deletado com sucesso!");
+        await api.delete(`/client/${clientId}`);
+
     } catch (error) {
         console.error("Erro ao deletar cliente", error);
-        alert("Erro ao deletar cliente");
+
     }
 };

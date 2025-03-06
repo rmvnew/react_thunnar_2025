@@ -92,7 +92,7 @@ import { useNavigate } from "react-router-dom";
 import api from "@services/api";
 import { toggleStatus, deleteClient } from "@services/clientService";
 import { Edit, Delete } from "@mui/icons-material";
-import { ActionsContainer, AddUserButton, DeleteButton, EditButton, SearchContainer, SearchInput, ToggleSwitch } from "./ClientList.styles";
+import { ActionsContainer, AddUserButton, DeleteButton, EditButton, EmptyRow, SearchContainer, SearchInput, ToggleSwitch } from "./ClientList.styles";
 import { Client } from "@interfaces/client.interfaces";
 
 const ClientList = () => {
@@ -148,7 +148,7 @@ const ClientList = () => {
                             <TableCell>Ações</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    {/* <TableBody>
                         {clients.map((client) => (
                             <TableRow key={client.client_id}>
                                 <TableCell>{client.client_name}</TableCell>
@@ -170,7 +170,34 @@ const ClientList = () => {
                                 </TableCell>
                             </TableRow>
                         ))}
+                    </TableBody> */}
+                    <TableBody>
+                        {clients.length > 0 ? (
+                            clients.map((client) => (
+                                <TableRow key={client.client_id}>
+                                    <TableCell>{client.client_name}</TableCell>
+                                    <TableCell>{client.client_is_company ? client.client_cnpj : client.client_cpf}</TableCell>
+                                    <TableCell>{client.phone?.phone_number || "N/A"}</TableCell>
+                                    <TableCell>
+                                        <ActionsContainer>
+                                            <ToggleSwitch checked={client.client_status} onChange={() => handleToggleStatus(client.client_id)} />
+                                            <EditButton onClick={() => navigate(`/edit-client/${client.client_id}`)}>
+                                                <Edit />
+                                            </EditButton>
+                                            <DeleteButton onClick={() => handleDeleteClient(client.client_id)}>
+                                                <Delete />
+                                            </DeleteButton>
+                                        </ActionsContainer>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <EmptyRow>
+                                <TableCell colSpan={4}>Nenhum cliente cadastrado</TableCell>
+                            </EmptyRow>
+                        )}
                     </TableBody>
+
                 </Table>
             </TableContainer>
         </div>
