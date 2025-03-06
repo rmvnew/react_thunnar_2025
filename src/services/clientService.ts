@@ -11,3 +11,29 @@ export const createClient = async (clientData: ClientDTO) => {
         throw error;
     }
 }
+
+export const toggleStatus = async (clientId: number) => {
+
+    try {
+        await api.patch(`/client/${clientId}`);
+
+    } catch (error) {
+        console.error("Erro ao atualizar status", error);
+
+    }
+};
+
+export const editClient = (clientId: number) => {
+    alert(`Redirecionando para edição do cliente ${clientId}`);
+    // Aqui pode ser implementado o redirecionamento para uma tela de edição
+};
+
+export const deleteClient = async (clientId: number) => {
+    try {
+        await api.delete(`/clients/${clientId}`);
+        alert("Cliente deletado com sucesso!");
+    } catch (error) {
+        console.error("Erro ao deletar cliente", error);
+        alert("Erro ao deletar cliente");
+    }
+};

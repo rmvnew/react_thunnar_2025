@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { TextField, Typography, Grid } from "@mui/material";
 import { createClient } from "@services/clientService";
-import { Container, FormWrapper, StyledButton, StyledSelect } from "./clientForm.styles";
+import { Container, FormWrapper, StyledButton, StyledSelect } from "./ClientForm.styles";
 import { ClientFormInputs } from "@interfaces/client.interfaces";
 import { useState } from "react";
 import CpfInput from "@components/CpfInput";

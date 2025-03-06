@@ -33,3 +33,17 @@ export interface ClientFormInputs {
     address_number: string;
     address_zipcod: string;
 }
+
+export interface Client {
+    client_id: number;
+    client_name: string;
+    client_cpf: string;
+    client_cnpj?: string;
+    client_status: boolean
+    client_is_company: boolean;
+    phone?: Phone;
+}
+
+interface Phone {
+    phone_number: string;
+}
