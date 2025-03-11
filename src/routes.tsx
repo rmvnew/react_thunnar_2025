@@ -4,6 +4,7 @@ import ClientList from "@pages/client/ClientList";
 import PrivateRoute from "@components/PrivateRoute";
 import Login from "@pages/auth/Login";
 import Main from "@pages/main/Main";
+import Layout from "@components/side_menu/Layout";
 
 const AppRoutes = () => {
     return (
@@ -13,9 +14,11 @@ const AppRoutes = () => {
 
 
                 <Route element={<PrivateRoute />}>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/users" element={<ClientList />} />
-                    <Route path="/user_register" element={<ClientForm />} />
+                    <Route path="/" element={<Layout />}>
+                        {/* <Route path="/" element={<Main />} /> */}
+                        <Route path="/users" element={<ClientList />} />
+                        <Route path="/user_register" element={<ClientForm />} />
+                    </Route>
                 </Route>
             </Routes>
         </Router>
