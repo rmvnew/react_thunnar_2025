@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useAuth } from "@contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 import {
-    Container,
-    Menu,
-    MenuItem,
-    Footer,
-    UserInfo,
-    LogoutButton,
-    ToggleButton,
-} from './SideMenu.styled';
+    Container, Menu, MenuItem, Footer, UserInfo, LogoutButton, ToggleButton
+} from "./SideMenu.styled";
 
 interface MenuItemProps {
     label: string;
@@ -15,30 +11,25 @@ interface MenuItemProps {
     onClick: () => void;
 }
 
-interface User {
-    name: string;
-    avatar?: string;
-}
-
 interface SideMenuProps {
     menuItems: MenuItemProps[];
-    user: User;
-    onLogout: () => void;
 }
 
-const SideMenu: React.FC<SideMenuProps> = ({ menuItems, user, onLogout }) => {
+const SideMenu: React.FC<SideMenuProps> = ({ menuItems }) => {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
 
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
+    const toggleMenu = () => setIsOpen(!isOpen);
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
     };
 
     return (
         <>
-            <ToggleButton onClick={toggleMenu}>
-                {/* Ícone de menu (pode ser substituído por um componente de ícone) */}
-                ☰
-            </ToggleButton>
+            <ToggleButton onClick={toggleMenu}>☰</ToggleButton>
             <Container isOpen={isOpen}>
                 <Menu>
                     {menuItems.map((item, index) => (
@@ -50,10 +41,27 @@ const SideMenu: React.FC<SideMenuProps> = ({ menuItems, user, onLogout }) => {
                 </Menu>
                 <Footer>
                     <UserInfo>
-                        {user.avatar && <img src={user.avatar} alt={user.name} />}
-                        <span>{user.name}</span>
+                        {/* Se tiver avatar, mostra a imagem */}
+                        {user?.avatar && (
+                            <img
+                                src={user.avatar}
+                                alt={user.name}
+                                style={{
+                                    width: "40px",
+                                    height: "40px",
+                                    borderRadius: "50%",
+                                    marginRight: "10px",
+                                }}
+                            />
+                        )}
+                        <div>
+                            <span>{user?.name}</span>
+                            <div style={{ fontSize: "12px", opacity: 0.7 }}>
+                                {user?.profile}
+                            </div>
+                        </div>
                     </UserInfo>
-                    <LogoutButton onClick={onLogout}>Logout</LogoutButton>
+                    <LogoutButton onClick={handleLogout}>Sair</LogoutButton>
                 </Footer>
             </Container>
         </>

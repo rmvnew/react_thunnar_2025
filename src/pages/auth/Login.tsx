@@ -9,20 +9,37 @@ const Login = () => {
     const [email, setEmail] = useState("rmvnew@gmail.com");
     const [password, setPassword] = useState("12345");
 
+
     const handleLogin = async () => {
         try {
+            console.log("🟢 Tentando login com:", { email, password });
             await login(email, password);
-            navigate("/users");
+            console.log("✅ Redirecionando para /home...");
+            navigate("/home");
         } catch (error) {
-            alert("Erro ao fazer login!");
+
         }
     };
 
     return (
         <Container maxWidth="sm">
             <h2>Login</h2>
-            <TextField label="Email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <TextField label="Senha" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+            <TextField
+                label="Email"
+                fullWidth
+                margin="normal"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+                label="Senha"
+                type="password"
+                fullWidth
+                margin="normal"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
             <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
                 Entrar
             </Button>

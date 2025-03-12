@@ -149,9 +149,10 @@ const ClientList = () => {
 
     return (
         <div>
-            <BackButton variant="contained" onClick={() => navigate("/")}>
+            <BackButton variant="contained" onClick={() => navigate("/home")}>
                 <ArrowBack /> Voltar
             </BackButton>
+
             <SearchContainer>
                 {/* Botão de voltar */}
 

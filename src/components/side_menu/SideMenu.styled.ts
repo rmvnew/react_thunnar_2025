@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ContainerProps {
-    isOpen: boolean;
+  isOpen: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -49,12 +49,15 @@ export const MenuItem = styled.li`
 export const Footer = styled.div`
   padding: 20px;
   border-top: 1px solid #34495e;
+ 
 `;
 
 export const UserInfo = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  font-size: 0.7rem;
+  
 
   img {
     width: 40px;
@@ -75,7 +78,7 @@ export const LogoutButton = styled.button`
   transition: background 0.2s;
 
   &:hover {
-    background-color: #c0392b;
+    background-color:rgb(151, 49, 38);
   }
 `;
 
