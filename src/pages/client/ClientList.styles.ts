@@ -1,8 +1,26 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { Button as MuiButton, TextField, IconButton, Switch } from "@mui/material";
 
+
+export const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+  }
+`;
+
+
 export const SearchContainer = styled.div`
-  width: 100%;
+  width: 70vw;
   display: flex;
   margin-top: 1rem;
   justify-content: space-between;
@@ -39,14 +57,48 @@ export const BackButton = styled(MuiButton)`
   }
 `;
 
+// export const TableContainerStyled = styled.div`
+//   width: 100%;
+//   max-width: 1200px;
+//   margin: 0 auto;
+//   overflow-x: auto;
+//   display: flex;
+//   justify-content: center;
+// `;
+
 export const TableContainerStyled = styled.div`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow-x: auto;
+  width: 90%; /* Padrão para telas menores */
+  max-width: 800px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  text-align: left;
+  overflow-x: auto;
+
+  @media (min-width: 1280px) {
+    max-width: 1000px;
+    min-width: 950px;
+    padding: 3rem;
+  }
+
+  @media (min-width: 1440px) {
+    max-width: 1200px;
+    min-width: 1150px;
+    padding: 4rem;
+  }
+
+  @media (min-width: 1920px) {
+    max-width: 1600px;
+    min-width: 1550px;
+    padding: 5rem;
+  }
 `;
+
 
 export const ActionsContainer = styled.div`
   display: flex;

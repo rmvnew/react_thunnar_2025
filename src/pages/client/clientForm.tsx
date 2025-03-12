@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { TextField, Typography, Grid } from "@mui/material";
 import { createClient } from "@services/clientService";
-import { Container, FormWrapper, StyledButton, StyledSelect } from "./ClientForm.styles";
+import { Container, FormWrapper, StyledButton, StyledCandelButton, StyledSelect } from "./ClientForm.styles";
 import { ClientFormInputs } from "@interfaces/client.interfaces";
 import { useState } from "react";
 import CpfInput from "@components/CpfInput";
@@ -12,6 +12,11 @@ const ClientForm = () => {
     const { register, handleSubmit, reset, control } = useForm<ClientFormInputs>();
     const [isCompany, setIsCompany] = useState(false);
     const navigate = useNavigate();
+
+
+    const cancel = () => {
+        navigate("/users");
+    };
 
     const onSubmit = async (data: ClientFormInputs) => {
         try {
@@ -96,7 +101,10 @@ const ClientForm = () => {
                         <Grid item xs={6}>
                             <TextField fullWidth label="Número" {...register("address_number")} />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} style={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                            <StyledCandelButton onClick={cancel} variant="contained" fullWidth>
+                                Cancelar
+                            </StyledCandelButton>
                             <StyledButton type="submit" variant="contained" fullWidth>
                                 Cadastrar
                             </StyledButton>

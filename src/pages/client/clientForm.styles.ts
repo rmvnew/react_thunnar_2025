@@ -69,9 +69,20 @@ export const StyledGrid = styled.div`
 export const StyledButton = styled(MuiButton)`
   background-color: #007bff !important;
   color: white !important;
+  height: 50px;
   font-weight: bold;
   &:hover {
     background-color: #0056b3 !important;
+  }
+`;
+
+export const StyledCandelButton = styled(MuiButton)`
+  background-color:rgb(255, 0, 55) !important;
+  color: white !important;
+  height: 50px;
+  font-weight: bold;
+  &:hover {
+    background-color: rgb(143, 0, 31) !important;
   }
 `;
 
