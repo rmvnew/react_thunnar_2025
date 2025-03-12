@@ -15,7 +15,7 @@ const ClientForm = () => {
 
 
     const cancel = () => {
-        navigate("/users");
+        navigate("/clients");
     };
 
     const onSubmit = async (data: ClientFormInputs) => {
@@ -39,7 +39,7 @@ const ClientForm = () => {
 
 
             await createClient(clientData).then(() => {
-                navigate("/users");
+                navigate("/clients");
             });
 
             alert("Cliente cadastrado com sucesso!");
