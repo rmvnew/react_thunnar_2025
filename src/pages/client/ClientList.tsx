@@ -18,6 +18,7 @@ import {
 } from "./ClientList.styles";
 import { Client } from "@interfaces/client.interfaces";
 
+
 const ClientList = () => {
     const [clients, setClients] = useState<Client[]>([]);
     const [search, setSearch] = useState("");
@@ -47,6 +48,8 @@ const ClientList = () => {
         setReload((prev) => !prev);
     };
 
+
+
     return (
         <div>
             <BackButton variant="contained" onClick={() => navigate("/home")}>
@@ -66,6 +69,7 @@ const ClientList = () => {
                 <AddUserButton variant="contained" onClick={() => navigate("/user_register")}>
                     Novo Cliente
                 </AddUserButton>
+
             </SearchContainer>
 
             <TableContainer component={Paper}>

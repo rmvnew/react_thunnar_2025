@@ -7,6 +7,7 @@ import { useState } from "react";
 import CpfInput from "@components/CpfInput";
 import CnpjInput from "@components/CnpjInput";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 const ClientForm = () => {
     const { register, handleSubmit, reset, control } = useForm<ClientFormInputs>();
@@ -42,11 +43,28 @@ const ClientForm = () => {
                 navigate("/clients");
             });
 
-            alert("Cliente cadastrado com sucesso!");
+            toast.success("Cliente cadastrado com sucesso!", {
+                position: "top-right",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
             reset();
-        } catch (error) {
-            console.error("Erro ao cadastrar cliente", error);
-            alert("Erro ao cadastrar cliente");
+        } catch (error: any) {
+
+            const errorMessage = error.response?.data?.message || "Erro desconhecido ao cadastrar cliente";
+
+            toast.error(errorMessage, {
+                position: "top-right",
+                autoClose: 7000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
         }
     };
 

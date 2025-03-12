@@ -5,10 +5,12 @@ import PrivateRoute from "@components/PrivateRoute";
 import Login from "@pages/auth/Login";
 import Main from "@pages/main/Main";
 import Layout from "@components/side_menu/Layout";
+import ToastProvider from "@components/toast";
 
 const AppRoutes = () => {
     return (
         <Router>
+            <ToastProvider />
             <Routes>
                 <Route path="/login" element={<Login />} />
 
