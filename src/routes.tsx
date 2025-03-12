@@ -19,6 +19,7 @@ const AppRoutes = () => {
                     <Route path="/" element={<Layout />}>
                         <Route path="/home" element={<Main />} />
                         <Route path="/clients" element={<ClientList />} />
+                        <Route path="/edit-client/:clientId" element={<ClientForm />} />
                         <Route path="/user_register" element={<ClientForm />} />
                     </Route>
                 </Route>
