@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "@services/api";
-import { toggleStatus, deleteClient } from "@services/clientService";
+import { deleteClient } from "@services/clientService";
 import { Edit, Delete, ArrowBack } from "@mui/icons-material";
 import {
     ActionsContainer,
@@ -15,12 +15,13 @@ import {
     SelectFilter,
     ToggleSwitch,
     BackButton
-} from "./ClientList.styles";
-import { Client } from "@interfaces/client.interfaces";
-import { formatDate } from "../../common/utils/format_date";
+} from "./CompanyList.styles";
 
-const ClientList = () => {
-    const [clients, setClients] = useState<Client[]>([]);
+import { formatDate } from "../../common/utils/format_date";
+import { Company } from "@interfaces/company.interfaces";
+
+const CompanyList = () => {
+    const [companies, setCompanies] = useState<Company[]>([]);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
@@ -33,11 +34,11 @@ const ClientList = () => {
 
     const fetchClients = async (page: number) => {
         try {
-            const response = await api.get(`/client`, {
+            const response = await api.get(`/company`, {
                 params: { page, limit, orderBy, sort, client_name: search }
             });
 
-            setClients(response.data.items);
+            setCompanies(response.data.items);
             setTotalPages(response.data.meta.totalPages);
             setPage(response.data.meta.currentPage);
         } catch (error) {
@@ -58,10 +59,7 @@ const ClientList = () => {
         return () => clearTimeout(delaySearch);
     }, [search]);
 
-    const handleToggleStatus = async (clientId: number) => {
-        await toggleStatus(clientId);
-        fetchClients(page);
-    };
+
 
     const handleDeleteClient = async (clientId: number) => {
         await deleteClient(clientId);
@@ -77,11 +75,11 @@ const ClientList = () => {
             <SearchContainer>
                 {/* Campo de busca */}
                 <SearchInput
-                    label="Buscar Cliente"
+                    label="Buscar Empresas"
                     variant="outlined"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Digite o nome do cliente..."
+                    placeholder="Digite o nome da empresa..."
                 />
 
                 {/* Ordenação por Nome ou Data */}
@@ -109,8 +107,8 @@ const ClientList = () => {
                 </SelectFilter>
 
                 {/* Botão Novo Cliente */}
-                <AddUserButton variant="contained" onClick={() => navigate("/user_register")}>
-                    Novo Cliente
+                <AddUserButton variant="contained" onClick={() => navigate("/company_register")}>
+                    Nova Empresa
                 </AddUserButton>
             </SearchContainer>
 
@@ -120,7 +118,7 @@ const ClientList = () => {
                         <TableRow>
                             <TableCell>ID</TableCell>
                             <TableCell>Nome</TableCell>
-                            <TableCell>CPF / CNPJ</TableCell>
+                            <TableCell>CNPJ</TableCell>
                             <TableCell>Data Cadastro</TableCell>
                             <TableCell>Telefone</TableCell>
                             <TableCell>Ações</TableCell>
@@ -128,24 +126,20 @@ const ClientList = () => {
                     </TableHead>
 
                     <TableBody>
-                        {clients.length > 0 ? (
-                            clients.map((client) => (
-                                <TableRow key={client.client_id}>
-                                    <TableCell>{client.client_id}</TableCell>
-                                    <TableCell>{client.client_name}</TableCell>
-                                    <TableCell>{client.client_is_company ? client.client_cnpj : client.client_cpf}</TableCell>
-                                    <TableCell>{formatDate(client.created_at)}</TableCell>
-                                    <TableCell>{client.phone?.phone_number || "N/A"}</TableCell>
+                        {companies.length > 0 ? (
+                            companies.map((company) => (
+                                <TableRow key={company.company_id}>
+                                    <TableCell>{company.company_id}</TableCell>
+                                    <TableCell>{company.company_name}</TableCell>
+                                    <TableCell>{company.company_cnpj}</TableCell>
+                                    <TableCell>{formatDate(company.created_at)}</TableCell>
+                                    <TableCell>{company.phone?.phone_number || "N/A"}</TableCell>
                                     <TableCell>
                                         <ActionsContainer>
-                                            <ToggleSwitch
-                                                checked={client.client_status}
-                                                onChange={() => handleToggleStatus(client.client_id)}
-                                            />
-                                            <EditButton onClick={() => navigate(`/edit-client/${client.client_id}`)}>
+                                            <EditButton onClick={() => navigate(`/edit-ccompany/${company.company_id}`)}>
                                                 <Edit />
                                             </EditButton>
-                                            <DeleteButton onClick={() => handleDeleteClient(client.client_id)}>
+                                            <DeleteButton onClick={() => handleDeleteClient(company.company_id)}>
                                                 <Delete />
                                             </DeleteButton>
                                         </ActionsContainer>
@@ -154,7 +148,7 @@ const ClientList = () => {
                             ))
                         ) : (
                             <EmptyRow>
-                                <TableCell colSpan={4}>Nenhum cliente encontrado</TableCell>
+                                <TableCell colSpan={4}>Nenhum registro encontrado</TableCell>
                             </EmptyRow>
                         )}
                     </TableBody>
@@ -173,4 +167,4 @@ const ClientList = () => {
     );
 };
 
-export default ClientList;
+export default CompanyList;

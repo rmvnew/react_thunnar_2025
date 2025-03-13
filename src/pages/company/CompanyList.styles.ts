@@ -44,14 +44,7 @@ export const BackButton = styled(MuiButton)`
   }
 `;
 
-// export const TableContainerStyled = styled.div`
-//   width: 100%;
-//   max-width: 1200px;
-//   margin: 0 auto;
-//   overflow-x: auto;
-//   display: flex;
-//   justify-content: center;
-// `;
+
 
 export const TableContainerStyled = styled.div`
   width: 90%; /* Padrão para telas menores */

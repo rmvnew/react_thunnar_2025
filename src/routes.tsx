@@ -6,6 +6,8 @@ import Login from "@pages/auth/Login";
 import Main from "@pages/main/Main";
 import Layout from "@components/side_menu/Layout";
 import ToastProvider from "@components/toast";
+import CompanyList from "@pages/company/CompanyList";
+import CompanyForm from "@pages/company/CompanyForm";
 
 const AppRoutes = () => {
     return (
@@ -18,9 +20,12 @@ const AppRoutes = () => {
                 <Route element={<PrivateRoute />}>
                     <Route path="/" element={<Layout />}>
                         <Route path="/home" element={<Main />} />
+                        <Route path="/companies" element={<CompanyList />} />
                         <Route path="/clients" element={<ClientList />} />
                         <Route path="/edit-client/:clientId" element={<ClientForm />} />
+                        <Route path="/edit-company/:companyId" element={<CompanyForm />} />
                         <Route path="/user_register" element={<ClientForm />} />
+                        <Route path="/company_register" element={<CompanyForm />} />
                     </Route>
                 </Route>
             </Routes>
