@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField, Grid } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "@services/api";
 import { toggleStatus, deleteClient } from "@services/clientService";
@@ -12,9 +12,9 @@ import {
     EmptyRow,
     SearchContainer,
     SearchInput,
+    SelectFilter,
     ToggleSwitch,
-    BackButton,
-    SelectFilter
+    BackButton
 } from "./ClientList.styles";
 import { Client } from "@interfaces/client.interfaces";
 
@@ -23,19 +23,17 @@ const ClientList = () => {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    // Estados de Paginação
+    // Estados de Paginação e Ordenação
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const limit = 8;
-
-    // Estados de Ordenação
-    const [orderBy, setOrderBy] = useState("DATE"); // Ordenação padrão
-    const [sort, setSort] = useState("ASC"); // Crescente por padrão
+    const [orderBy, setOrderBy] = useState("DATE");
+    const [sort, setSort] = useState("ASC");
 
     const fetchClients = async (page: number) => {
         try {
             const response = await api.get(`/client`, {
-                params: { page, limit, orderBy, sort }
+                params: { page, limit, orderBy, sort, client_name: search }
             });
 
             setClients(response.data.items);
@@ -49,6 +47,15 @@ const ClientList = () => {
     useEffect(() => {
         fetchClients(page);
     }, [page, orderBy, sort]);
+
+    // Busca automática ao digitar no campo de busca (com debounce de 500ms)
+    useEffect(() => {
+        const delaySearch = setTimeout(() => {
+            fetchClients(1); // Sempre busca a partir da página 1 ao pesquisar
+        }, 900);
+
+        return () => clearTimeout(delaySearch);
+    }, [search]);
 
     const handleToggleStatus = async (clientId: number) => {
         await toggleStatus(clientId);
@@ -66,7 +73,6 @@ const ClientList = () => {
                 <ArrowBack /> Voltar
             </BackButton>
 
-
             <SearchContainer>
                 {/* Campo de busca */}
                 <SearchInput
@@ -74,6 +80,7 @@ const ClientList = () => {
                     variant="outlined"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Digite o nome do cliente..."
                 />
 
                 {/* Ordenação por Nome ou Data */}
@@ -106,12 +113,10 @@ const ClientList = () => {
                 </AddUserButton>
             </SearchContainer>
 
-
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
                             <TableCell>Nome</TableCell>
                             <TableCell>CPF / CNPJ</TableCell>
                             <TableCell>Telefone</TableCell>
@@ -123,7 +128,6 @@ const ClientList = () => {
                         {clients.length > 0 ? (
                             clients.map((client) => (
                                 <TableRow key={client.client_id}>
-                                    <TableCell>{client.client_id}</TableCell>
                                     <TableCell>{client.client_name}</TableCell>
                                     <TableCell>{client.client_is_company ? client.client_cnpj : client.client_cpf}</TableCell>
                                     <TableCell>{client.phone?.phone_number || "N/A"}</TableCell>
@@ -145,7 +149,7 @@ const ClientList = () => {
                             ))
                         ) : (
                             <EmptyRow>
-                                <TableCell colSpan={4}>Nenhum cliente cadastrado</TableCell>
+                                <TableCell colSpan={4}>Nenhum cliente encontrado</TableCell>
                             </EmptyRow>
                         )}
                     </TableBody>
