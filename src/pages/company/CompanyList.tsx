@@ -13,7 +13,6 @@ import {
     SearchContainer,
     SearchInput,
     SelectFilter,
-    ToggleSwitch,
     BackButton
 } from "./CompanyList.styles";
 
