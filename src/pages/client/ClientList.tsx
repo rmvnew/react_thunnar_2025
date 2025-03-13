@@ -17,6 +17,7 @@ import {
     BackButton
 } from "./ClientList.styles";
 import { Client } from "@interfaces/client.interfaces";
+import { formatDate } from "../../common/utils/format_date";
 
 const ClientList = () => {
     const [clients, setClients] = useState<Client[]>([]);
@@ -117,8 +118,10 @@ const ClientList = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell>ID</TableCell>
                             <TableCell>Nome</TableCell>
                             <TableCell>CPF / CNPJ</TableCell>
+                            <TableCell>Data Cadastro</TableCell>
                             <TableCell>Telefone</TableCell>
                             <TableCell>Ações</TableCell>
                         </TableRow>
@@ -128,8 +131,10 @@ const ClientList = () => {
                         {clients.length > 0 ? (
                             clients.map((client) => (
                                 <TableRow key={client.client_id}>
+                                    <TableCell>{client.client_id}</TableCell>
                                     <TableCell>{client.client_name}</TableCell>
                                     <TableCell>{client.client_is_company ? client.client_cnpj : client.client_cpf}</TableCell>
+                                    <TableCell>{formatDate(client.created_at)}</TableCell>
                                     <TableCell>{client.phone?.phone_number || "N/A"}</TableCell>
                                     <TableCell>
                                         <ActionsContainer>

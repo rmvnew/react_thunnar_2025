@@ -39,6 +39,7 @@ export interface Client {
     client_name: string;
     client_cpf: string;
     client_cnpj?: string;
+    created_at: string
     client_status: boolean
     client_is_company: boolean;
     phone?: Phone;
