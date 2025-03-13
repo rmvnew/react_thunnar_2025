@@ -19,20 +19,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 
-export const SearchContainer = styled.div`
-  width: 70vw;
-  display: flex;
-  margin-top: 1rem;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-`;
 
-export const SearchInput = styled(TextField)`
-  flex: 1;
-  max-width: 500px;
-  
-`;
 
 export const AddUserButton = styled(MuiButton)`
   background-color: #28a745 !important;
@@ -122,3 +109,38 @@ export const EmptyRow = styled.tr`
   color: #999;
   font-size: 16px;
 `;
+
+
+export const SearchContainer = styled.div`
+  width: 70vw;
+  display: flex;
+   margin-top: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px; /* Adiciona um pequeno espaço entre os elementos */
+  margin-bottom: 1rem;
+`;
+
+export const SearchInput = styled(TextField)`
+  flex: 1;
+`;
+
+export const SelectFilter = styled(TextField)`
+  width: 130px; /* Define o tamanho máximo */
+`;
+
+
+// export const SearchContainer = styled.div`
+//   width: 70vw;
+//   display: flex;
+//   margin-top: 1rem;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 1rem;
+// `;
+
+// export const SearchInput = styled(TextField)`
+//   flex: 1;
+//   max-width: 500px;
+
+// `;
