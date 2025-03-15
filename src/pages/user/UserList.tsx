@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "@services/api";
-import { toggleStatus, deleteClient } from "@services/clientService";
+import { toggleStatus, deleteUser } from "@services/userService";
 import { Edit, Delete, ArrowBack } from "@mui/icons-material";
 import {
     ActionsContainer,
@@ -15,12 +15,12 @@ import {
     SelectFilter,
     ToggleSwitch,
     BackButton
-} from "./ClientList.styles";
-import { Client } from "@interfaces/client.interfaces";
+} from "./UserList.styles";
+import { User } from "@interfaces/user.interfaces";
 import { formatDate } from "../../common/utils/format_date";
 
-const ClientList = () => {
-    const [clients, setClients] = useState<Client[]>([]);
+const UserList = () => {
+    const [users, setusers] = useState<User[]>([]);
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
@@ -31,41 +31,41 @@ const ClientList = () => {
     const [orderBy, setOrderBy] = useState("DATE");
     const [sort, setSort] = useState("ASC");
 
-    const fetchClients = async (page: number) => {
+    const fetchusers = async (page: number) => {
         try {
-            const response = await api.get(`/client`, {
-                params: { page, limit, orderBy, sort, client_name: search }
+            const response = await api.get(`/user`, {
+                params: { page, limit, orderBy, sort, user_name: search }
             });
 
-            setClients(response.data.items);
+            setusers(response.data.items);
             setTotalPages(response.data.meta.totalPages);
             setPage(response.data.meta.currentPage);
         } catch (error) {
-            console.error("Erro ao buscar clientes:", error);
+            console.error("Erro ao buscar useres:", error);
         }
     };
 
     useEffect(() => {
-        fetchClients(page);
+        fetchusers(page);
     }, [page, orderBy, sort]);
 
     // Busca automática ao digitar no campo de busca (com debounce de 500ms)
     useEffect(() => {
         const delaySearch = setTimeout(() => {
-            fetchClients(1); // Sempre busca a partir da página 1 ao pesquisar
+            fetchusers(1); // Sempre busca a partir da página 1 ao pesquisar
         }, 900);
 
         return () => clearTimeout(delaySearch);
     }, [search]);
 
-    const handleToggleStatus = async (clientId: number) => {
-        await toggleStatus(clientId);
-        fetchClients(page);
+    const handleToggleStatus = async (userId: number) => {
+        await toggleStatus(userId);
+        fetchusers(page);
     };
 
-    const handleDeleteClient = async (clientId: number) => {
-        await deleteClient(clientId);
-        fetchClients(page);
+    const handleDeleteuser = async (userId: number) => {
+        await deleteUser(userId);
+        fetchusers(page);
     };
 
     return (
@@ -77,11 +77,11 @@ const ClientList = () => {
             <SearchContainer>
                 {/* Campo de busca */}
                 <SearchInput
-                    label="Buscar Cliente"
+                    label="Buscar usuário"
                     variant="outlined"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Digite o nome do cliente..."
+                    placeholder="Digite o nome do usuário..."
                 />
 
                 {/* Ordenação por Nome ou Data */}
@@ -108,9 +108,9 @@ const ClientList = () => {
                     <option value="DESC">Decrescente</option>
                 </SelectFilter>
 
-                {/* Botão Novo Cliente */}
-                <AddUserButton variant="contained" onClick={() => navigate("/client_register")}>
-                    Novo Cliente
+                {/* Botão Novo usere */}
+                <AddUserButton variant="contained" onClick={() => navigate("/user_register")}>
+                    Novo usuário
                 </AddUserButton>
             </SearchContainer>
 
@@ -120,32 +120,32 @@ const ClientList = () => {
                         <TableRow>
                             <TableCell>ID</TableCell>
                             <TableCell>Nome</TableCell>
-                            <TableCell>CPF / CNPJ</TableCell>
+                            <TableCell>EMAIL</TableCell>
                             <TableCell>Data Cadastro</TableCell>
-                            <TableCell>Telefone</TableCell>
+                            <TableCell>STATUS</TableCell>
                             <TableCell>Ações</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        {clients.length > 0 ? (
-                            clients.map((client) => (
-                                <TableRow key={client.client_id}>
-                                    <TableCell>{client.client_id}</TableCell>
-                                    <TableCell>{client.client_name}</TableCell>
-                                    <TableCell>{client.client_is_company ? client.client_cnpj : client.client_cpf}</TableCell>
-                                    <TableCell>{formatDate(client.created_at)}</TableCell>
-                                    <TableCell>{client.phone?.phone_number || "N/A"}</TableCell>
+                        {users.length > 0 ? (
+                            users.map((user) => (
+                                <TableRow key={user.user_id}>
+                                    <TableCell>{user.user_id}</TableCell>
+                                    <TableCell>{user.user_name}</TableCell>
+                                    <TableCell>{user.user_email}</TableCell>
+                                    <TableCell>{formatDate(user.created_at)}</TableCell>
+                                    <TableCell>{user.status}</TableCell>
                                     <TableCell>
                                         <ActionsContainer>
                                             <ToggleSwitch
-                                                checked={client.client_status}
-                                                onChange={() => handleToggleStatus(client.client_id)}
+                                                checked={user.status}
+                                                onChange={() => handleToggleStatus(user.user_id)}
                                             />
-                                            <EditButton onClick={() => navigate(`/edit-client/${client.client_id}`)}>
+                                            <EditButton onClick={() => navigate(`/edit-user/${user.user_id}`)}>
                                                 <Edit />
                                             </EditButton>
-                                            <DeleteButton onClick={() => handleDeleteClient(client.client_id)}>
+                                            <DeleteButton onClick={() => handleDeleteuser(user.user_id)}>
                                                 <Delete />
                                             </DeleteButton>
                                         </ActionsContainer>
@@ -154,7 +154,7 @@ const ClientList = () => {
                             ))
                         ) : (
                             <EmptyRow>
-                                <TableCell colSpan={4}>Nenhum cliente encontrado</TableCell>
+                                <TableCell colSpan={4}>Nenhum registro encontrado</TableCell>
                             </EmptyRow>
                         )}
                     </TableBody>
@@ -173,4 +173,4 @@ const ClientList = () => {
     );
 };
 
-export default ClientList;
+export default UserList;

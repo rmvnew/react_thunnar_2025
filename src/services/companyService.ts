@@ -9,9 +9,9 @@ export const createCompany = async (companyData: CompanyDTO) => {
         toast.success("Empresa cadastrado com sucesso!");
         return response.data;
     } catch (error: any) {
-        const errorMessage = error.response?.data?.message || "Erro ao cadastrar cliente.";
+        const errorMessage = error.response?.data?.message || "Erro ao cadastrar empresa.";
         toast.error(errorMessage);
-        console.error("Erro ao cadastrar cliente:", error);
+        console.error("Erro ao cadastrar empresa:", error);
         throw error;
     }
 };

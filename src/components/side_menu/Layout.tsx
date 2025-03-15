@@ -23,6 +23,11 @@ const Layout: React.FC = () => {
             onClick: () => navigate("/clients"),
         },
         {
+            label: "Usuários",
+            icon: <span role="img" aria-label="Usuários"><FaUser /></span>,
+            onClick: () => navigate("/users"),
+        },
+        {
             label: "Sobre",
             icon: <span role="img" aria-label="about">ℹ️</span>,
             onClick: () => navigate("/sobre"),

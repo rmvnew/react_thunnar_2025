@@ -1,6 +1,6 @@
 
 
-export interface userDTO {
+export interface UserDTO {
     user_name: string;
     user_email: string;
     user_avatar: string;
@@ -9,19 +9,12 @@ export interface userDTO {
 }
 
 
-export interface userFormInputs {
+export interface UserFormInputs {
     user_name: string;
-    user_cpf: string;
-    user_cnpj: string;
-    user_is_company: boolean;
-    user_status: string;
-    phone_number: string;
-    address_city: string;
-    address_state: string;
-    address_street: string;
-    address_neighborhood: string;
-    address_number: string;
-    address_zipcod: string;
+    user_email: string;
+    user_avatar: string;
+    user_password: string;
+    user_profile_id: string
 }
 
 export interface User {
@@ -37,3 +30,8 @@ export interface User {
     user_avatar: string;
 }
 
+
+export interface Profile {
+    profile_id: string;
+    profile_name: string;
+}
